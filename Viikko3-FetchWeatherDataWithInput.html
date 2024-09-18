@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <title>Front End Programming / React</title>
+
+        <style>
+            body {
+                margin: auto;
+                width: 50%;
+                text-align: center;
+                background-color: linen;
+            }
+            
+            h1 {
+                color:orange;
+            }
+        </style>
+
+    </head>
+
+
+  <body>
+    <!-- Root container for react components -->
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <script type="text/babel">
+
+
+      function ReactComponent() {
+
+          
+        // SET DATA AS A KEY:VALUE MAP THING
+        const [data, setData] = React.useState({})
+        const  [inputText, setInputText] = React.useState("")
+        const [showInfo, setShowInfo] = React.useState(false)
+
+        const [cityName, setCityName] = React.useState("")
+        const [temperature, setTemperature] = React.useState("")
+        const [weatherType, setWeatherType] = React.useState("")
+        const [weatherUrl, setWeatherUrl] = React.useState("")
+
+        
+       
+
+        const fetchWeatherDataOnButtonPress = () => {
+     
+          fetch("https://api.openweathermap.org/data/2.5/weather?units=metric&q="+ inputText +"&APPID=c9762fd2dd9980b42f1550061eefa221")
+
+          .then(response =>  { 
+            return response.json()
+          })
+
+          .then(
+            
+            responseData => {
+              console.log(responseData)
+              setData(responseData)
+
+              setTemperature(responseData.main.temp)
+              setWeatherType(responseData.weather[0].description)
+              setWeatherUrl("https://openweathermap.org/img/wn/"+ responseData.weather[0].icon +"@2x.png")
+
+              setCityName(responseData.name)
+              setShowInfo(true)
+              
+                    
+            })
+
+          .catch(err => console.error(err))
+          };
+        
+
+
+
+
+
+          
+
+        // RETURN
+        return (
+            <div>
+
+              <p>City name:</p>
+              <input 
+              name="inputText" value={inputText} 
+              onChange={e => setInputText(e.target.value)} />
+
+              <button onClick={fetchWeatherDataOnButtonPress}>Find Weather in City</button>
+
+              <WeatherBlockComponent show ={showInfo} name={cityName} temp={temperature} weather={weatherType} url={weatherUrl}  />
+              
+            </div>) 
+           
+
+          }
+
+        
+      function WeatherBlockComponent(props) {
+        return (props.show ?
+         <div>
+
+          <h1>Weather in... {props.name}</h1>
+              <p>Temperature: {props.temp}</p>
+              <p>Weather: {props.weather}</p>
+              <img src={props.url} alt="Weather Icon"/>
+          
+          </div>:
+         <div></div>)
+         
+          //  <h1>Weather in... {cityName}</h1>
+            //<p>Temperature: {temperature}</p>
+              //<p>Weather: {weatherType}</p>
+              //<img src={weatherUrl} alt="Weather Icon"/>
+      }
+
+  
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<div><ReactComponent /></div>);    
+    </script>
+  </body>
+</html>
+

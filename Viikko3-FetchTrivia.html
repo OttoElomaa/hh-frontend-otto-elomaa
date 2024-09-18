@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <title>Front End Programming / React</title>
+
+        <style>
+            body {
+                margin: auto;
+                width: 50%;
+                text-align: center;
+                background-color: linen;
+            }
+            
+            h1 {
+                color:orange;
+            }
+        </style>
+
+    </head>
+
+
+  <body>
+    <!-- Root container for react components -->
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <script type="text/babel">
+
+
+        function ReactComponent() {
+
+            
+          // SET DATA AS A KEY:VALUE MAP THING
+          const [data, setData] = React.useState({})
+
+          const [question, setQuestion] = React.useState("")
+          const [answer, setAnswer] = React.useState("")
+          const [questionType, setQuestionType] = React.useState("")
+
+          const [answerVisible, setAnswerVisible] = React.useState(false)
+
+          const [json, setJson] = React.useState()
+
+
+          const fetchQuestionOnButtonPress = () => {
+
+            fetch("https://opentdb.com/api.php?amount=1")
+
+            .then(response =>  { 
+              return response.json()
+            })
+            
+            .then(
+              
+              responseData => {
+                console.log(responseData)
+                setData(responseData) 
+                setQuestion(responseData.results[0].question) 
+                setAnswer(responseData.results[0].correct_answer)
+                setQuestionType(responseData.results[0].type)
+                setAnswerVisible(false)       
+              })
+
+            .catch(err => console.error(err))
+          };
+            
+       
+          const showAnswerOnButtonPress = () => {
+            setAnswerVisible(true)
+
+          }
+
+          React.useEffect(() => {
+          })
+
+        
+      
+
+          // RETURN
+          return (
+              <div>
+                  <h1>Trivia Questions and Answers</h1>
+                  <p>Question: {question}</p>
+                  <p>Question type: {questionType}</p>
+                  <button onClick={fetchQuestionOnButtonPress}>Press for a new question!</button>
+                  <ShowAnswerOnButtonPress answerShow={answerVisible} myAnswer={answer}/>
+                  <button onClick={showAnswerOnButtonPress}>Press to see answer!</button>
+                  
+              </div>) 
+
+            }
+
+   
+
+      // JOS STATUS FULFILLED=2.. 
+      // PALAUTTAA JSON-TIEDOSTON
+      function ShowAnswerOnButtonPress(props) {
+        return (
+          props.answerShow ? 
+            <p>Answer: {props.myAnswer}</p> : 
+            <p>Answer:</p>
+        )
+            
+          
+      }
+
+
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<div><ReactComponent /></div>);    
+    </script>
+  </body>
+</html>

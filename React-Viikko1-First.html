@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>Front End Programming / React</title>
+
+    <style>
+        body {
+            margin: auto;
+            width: 50%;
+            text-align: center;
+            background-color: linen;
+        }
+        
+        h1 {
+            color:orange;
+        }
+        </style>
+
+  </head>
+
+
+
+  <body>
+    <!-- We will put our React component inside this div. -->
+    <div id="root"></div>
+
+    <!-- Load React & Babel -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- React component code -->
+    <script type="text/babel">
+
+        const helloText = "This is my first JS React project :)"
+
+        // ARROW FUNCTION
+        const ArrowFuncParagraph = (text) => <p>{"Quote: " + text}</p>;
+        const CoolMath = (x, y) => x * y;
+        //coolInput = window.prompt('Syötä teksti');
+
+        // React component
+        function HelloReactComponent() {
+            
+            
+            return <div>
+
+                <h1>Hello world</h1>
+
+                <HeaderAndParagraph header={"Hello there"} para={helloText} />
+                <TextParagraphWithName text={"This is how to pass your name via Props"} name={"Otto Elomaa"} />
+                <HeaderAndParagraph header={"This is header"} para={"This is paragraph"} />
+
+                <ConditionalRendering bool={false} />
+                <ConditionalRendering bool={true} />
+
+                {ArrowFuncParagraph("This uses arrow function!")}
+                <p>{CoolMath(4, 5)}</p>
+
+                
+
+                </div>;
+        }
+
+        
+
+        function TextParagraphWithName(props) {
+            return (<div><p>{props.text}</p>
+                <p>Sincerely,</p>
+                <p>{props.name}</p>
+                </div>);
+        }
+
+        function HeaderAndParagraph(props) {
+            return (<div>
+                <h2>{props.header}</h2>
+                <p>{props.para}</p>
+            </div>);
+        }
+
+        function ConditionalRendering(props) {
+            return (
+                props.bool ? 
+                <p>This text is rendered if the statement is true.</p> :
+                <p>This text is rendered if the statement is false.</p>
+                );
+            }
+        
+
+
+       
+
+        // Create root element
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        // Initial render
+        root.render(<HelloReactComponent />);
+        
+
+
+    </script>
+
+  </body>
+
+</html>

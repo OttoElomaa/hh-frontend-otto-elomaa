@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <title>Front End Programming / React</title>
+
+        <style>
+            body {
+                margin: auto;
+                width: 50%;
+                text-align: center;
+                background-color: linen;
+            }
+            
+            h1 {
+                color:orange;
+            }
+        </style>
+
+    </head>
+
+
+  <body>
+    <!-- Root container for react components -->
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <script type="text/babel">
+
+
+        function ReactComponent() {
+
+            React.useEffect( () => 
+              {
+              console.log("UseEffect Print Just Once")
+              }, []);
+
+            React.useEffect( () => 
+            {
+            console.log("UseEffect Print Many Times")
+            });
+
+            React.useEffect( () => 
+              {
+              console.log("UseEffect CountTwo")
+              }, [countTwo]);
+          
+
+            //STATES
+            const [count, setCount] = React.useState(0);
+            const [countTwo, setCountTwo] = React.useState(0);
+            
+            //FUNCTIONS
+
+
+            // RETURN
+            return (
+                <div>
+
+                    <p>You clicked Button1 {count} times</p>
+                    <button onClick={() => setCount(count + 1)}>Button 1</button>
+                    
+                    <p>You clicked Button2 {countTwo} times</p>
+
+                    <button onClick={() => setCountTwo(countTwo + 1)}>Button 2</button>
+
+                </div>)
+                        
+            
+        }
+
+      function UseEffectComp() {
+
+        let text = "+ Add";
+        let minusText = "- Substract";
+        let resetText = "RESET";
+
+      
+      };
+
+
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<div><ReactComponent /></div>);    
+    </script>
+  </body>
+</html>

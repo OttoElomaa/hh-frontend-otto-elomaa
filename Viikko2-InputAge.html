@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <title>Front End Programming / React</title>
+
+        <style>
+            body {
+                margin: auto;
+                width: 50%;
+                text-align: center;
+                background-color: linen;
+            }
+            
+            h1 {
+                color:orange;
+            }
+        </style>
+
+    </head>
+
+
+  <body>
+    <!-- Root container for react components -->
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <script type="text/babel">
+
+
+      function ReactComponent() {
+        return <div>
+          <Counters/>
+        </div>
+      }
+
+      function Counters() {
+
+
+        const handleChange = (event) => {
+          setInfo({ ...info, [event.target.name]: event.target.value});
+          }
+
+        const [info, setInfo] = React.useState({name: "", age: ""});
+        const [message, setMessage] = React.useState("Press the button after typing down your info!")
+
+        const buttonPress = () => {
+          parseInt(info.age) > 18 ? 
+              setMessage(`Happy browsing, ${info.name}!`) :
+              setMessage(`${info.name}, sorry but you're too young to sign in!`) 
+        };
+
+        return (
+          <div>
+            <h1>Viikko 2 - Iän tarkistus</h1>
+
+            <p>{message}</p>
+            <p></p>
+
+            <p>Name preview: {info.name}</p>
+            <input name="name" value={info.name} onChange={handleChange} />
+
+           <p>Age preview: {info.age}</p>
+            <input name="age" value={info.age} onChange={handleChange} />
+
+            <button onClick={buttonPress}>Press this fancy button!</button>
+                  
+          </div>
+          );
+
+      };
+
+    
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<div><ReactComponent /></div>);    
+    </script>
+
+  </body>
+</html>

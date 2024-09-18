@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <title>Front End Programming / React</title>
+
+        <style>
+            body {
+                margin: auto;
+                width: 50%;
+                text-align: center;
+                background-color: linen;
+            }
+            
+            h1 {
+                color:orange;
+            }
+        </style>
+
+    </head>
+
+
+  <body>
+    <!-- Root container for react components -->
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <script type="text/babel">
+
+
+      function ReactComponent() {
+
+          
+        // SET DATA AS A KEY:VALUE MAP THING
+        const [data, setData] = React.useState({})
+        const [repositories, setRepositories] = React.useState([])
+
+        const  [inputText, setInputText] = React.useState("")
+        const [showInfo, setShowInfo] = React.useState(false)
+
+        const [cityName, setCityName] = React.useState("")
+        const [temperature, setTemperature] = React.useState("")
+        const [weatherType, setWeatherType] = React.useState("")
+        const [weatherUrl, setWeatherUrl] = React.useState("")
+
+        
+      
+
+        const fetchGithubRepoOnButtonPress = () => {
+    
+          fetch("https://api.github.com/search/repositories?q=" + inputText)
+
+          .then(response =>  { 
+            return response.json()
+          })
+
+          .then(
+            
+            responseData => {
+              console.log(responseData)
+              setData(responseData)
+              setRepositories(responseData.items)
+
+              
+              setShowInfo(true)
+              
+                    
+            })
+
+          .catch(err => console.error(err))
+          };
+        
+
+
+
+        // RETURN
+        return (
+          <div>
+
+          <h1>Github Repo Search</h1>
+          
+          <p>Input Search Words:</p>
+          <input 
+          name="inputText" value={inputText} 
+          onChange={e => setInputText(e.target.value)} />
+
+          <p>Search for Repository URL</p>
+          <button onClick={fetchGithubRepoOnButtonPress}>Search Repositories</button>
+
+          <DisplayBlockComponent show ={showInfo} repositories={repositories}  />
+
+          </div>) 
+
+
+        }
+
+        
+      function DisplayBlockComponent(props) {
+        return (props.show ?
+          <div>
+
+            <table>
+              <tbody>
+                  <tr>
+                      <th>Repo Full Name</th>
+                      <th>Repo Url</th>
+                      <th>Created at:</th>
+                      <th>Latest Push:</th>
+                      
+                  </tr>
+                  { props.repositories.map((repo) => 
+                      <tr key={repo.id}>
+                      <td>{repo.full_name}</td>
+                      <td>{repo.url}</td>
+                      <td>{repo.created_at}</td>
+                      <td>{repo.pushed_at}</td>
+                      
+                      </tr>) }
+                
+              </tbody>
+            </table>
+          
+          </div>:
+         <div></div>)
+         
+      }
+
+  
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<div><ReactComponent /></div>);    
+    </script>
+  </body>
+</html>
+
