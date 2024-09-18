@@ -23,6 +23,7 @@ function TodoList() {
     setTodos([...todos, todoItem]);
     };
 
+ 
 
     // RETURN REACT FRAGMENT
     return(
@@ -37,7 +38,7 @@ function TodoList() {
         <button onClick={addTodo}>Add</button> 
 
         <h2>List of Goals:</h2>
-        <TodoTable todos={todos}/>
+        <TodoTable todos={todos} setTodos={setTodos}/>
         </>
     );
   }
