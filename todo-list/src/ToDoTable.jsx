@@ -3,14 +3,6 @@ import React from "react";
 function TodoTable(props) {
 
 
-    // FUNCTION
-    const deleteTodoItem = (todoItem) => {
-
-        props.setTodos(props.todos.filter((todo) => todo.desc !== todoItem.desc || todo.date !== todoItem.date))
-    };
-
-
-
     return <>
         <table>
             <thead>
@@ -27,7 +19,7 @@ function TodoTable(props) {
                     <td class="rightBorder">{index + 1}:</td>
                     <td>{todo.desc}</td>
                     <td>{todo.date}</td>
-                    <td><button onClick={() => deleteTodoItem(todo) }>Delete</button></td>
+                    <td><button onClick={() => props.deleteTodoItem(todo) }>Delete</button></td>
                 </tr>
                 ))}
             </tbody>

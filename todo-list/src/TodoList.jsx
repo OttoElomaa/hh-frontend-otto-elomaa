@@ -6,8 +6,6 @@ import TodoTable from "./ToDoTable";
 function TodoList() {
 
     // STATES
-    const [desc, setDesc] = useState("");
-    
     const [todos, setTodos] = useState([]);
     const [todoItem, setTodoItem] = useState({desc: "", date: ""})
 
@@ -18,9 +16,15 @@ function TodoList() {
         setTodoItem({ ...todoItem, [event.target.name]: event.target.value})
       };
       
-      // Remember to call preventDefault() if using form
+    // FUNCTIONS FOR ADDING AND REMOVAL (PASS REMOVE FUNC TO TODOTABLE.JSX)
     const addTodo = () => {
-    setTodos([...todos, todoItem]);
+      setTodos([...todos, todoItem]);
+    };
+
+    // FUNCTION
+    const deleteTodoItem = (todoItem) => {
+
+      setTodos(todos.filter((todo) => todo.desc !== todoItem.desc || todo.date !== todoItem.date))
     };
 
  
@@ -38,7 +42,7 @@ function TodoList() {
         <button onClick={addTodo}>Add</button> 
 
         <h2>List of Goals:</h2>
-        <TodoTable todos={todos} setTodos={setTodos}/>
+        <TodoTable todos={todos} deleteTodoItem={deleteTodoItem}/>
         </>
     );
   }
