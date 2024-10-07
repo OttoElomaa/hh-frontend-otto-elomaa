@@ -5,13 +5,16 @@ import { AgGridReact } from "ag-grid-react";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css"; // Material Design theme
+import { Button, MenuItem, Select, TextField } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 
 
 function TodoList() {
 
   // STATES
   const [todos, setTodos] = useState([]);
-  const [todoItem, setTodoItem] = useState({ desc: "", date: "", priority: null })
+  const [todoItem, setTodoItem] = useState({ desc: "", date: dayjs(), priority: null })
 
   const gridRef = useRef();
 
@@ -40,11 +43,29 @@ function TodoList() {
     }
   };
 
+  // Function to handle date change separately
+  // WRITTEN BY CHATGPT
+  const handleDateChange = (newDate) => {
+    setTodoItem((prevItem) => ({
+      ...prevItem, date: newDate, // Update only the date field
+    }));
+  };
 
+
+  // COLUMN DEFS CONST INFO
   const [columnDefs, setColumnDefs] = useState([
-    { field: 'desc', sortable: false, filter: true, floatingFilter: true },
-    { field: 'priority', sortable: true, filter: true, floatingFilter: true, cellStyle: params => params.value === "High" ? { color: 'red' } : { color: 'black' } },
-    { field: 'date', sortable: true, filter: true, floatingFilter: true }
+    {
+      field: 'desc',
+      sortable: false, filter: true, floatingFilter: true
+    },
+    {
+      field: 'priority', sortable: true, filter: true, floatingFilter: true,
+      cellStyle: params => params.value === "High" ? { color: 'red' } : { color: 'black' }
+    },
+    {
+      field: 'date',
+      sortable: true, filter: true, floatingFilter: true
+    }
   ]);
 
 
@@ -58,54 +79,62 @@ function TodoList() {
       <h1>To-do List Exercise</h1>
 
       {/* ADD TO-DO ITEM FORM */}
-      <p>Add description - Add due date</p>
+      <p>Add description - - - - - Add priority  - - - - - - - - -  Add due date</p>
 
-      <input
+      <TextField
         type="text"
+        label="Description"
         name="desc"
         value={todoItem.desc}
         onChange={handleChange}
       />
-    
-      <input
-        type="date"
-        name="date"
-        value={todoItem.date}
-        onChange={handleChange}
-      />
 
-      <p>Add priority</p>
-      <select
-        name="priority"
+      <Select
+        type="text"
+        label="Priority"
+        name="priority" 
         value={todoItem.priority}
         onChange={handleChange}>
 
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-      </select>
+        <MenuItem value="Low">Low</MenuItem>
+        <MenuItem value="Medium">Medium</MenuItem>
+        <MenuItem value="High">High</MenuItem>
+      </Select>
+
+      <DatePicker
+        label="Date"
+        value={todoItem.date}
+        onChange={handleDateChange}
+      />
 
 
+      <br />
+      <br />
+      <Button
+        variant="outlined"
+        onClick={addTodo}>Add</Button>
+      <br />
 
-      <br />
-      <br />
-      <button onClick={addTodo}>Add</button>
-      <br />
-      <button onClick={handleDelete}>Delete</button>
-      <br />
 
 
       {/* TODO-LIST TABLE DISPLAY ELEMENT */}
       <h2>List of Goals:</h2>
 
-      <div className="ag-theme-material" style={{ width: 700, height: 800 }}>
+      <div className="ag-theme-material" style={{ width: 700 }}>
         <AgGridReact
           rowData={todos}
           columnDefs={columnDefs}
           onGridReady={params => gridRef.current = params.api}
           rowSelection="single"
+          domLayout='autoHeight'
         />
       </div>
+
+      <br />
+      <br />
+      <Button
+        variant="outlined"
+        onClick={handleDelete}>Delete Selected</Button>
     </>
   );
 }
