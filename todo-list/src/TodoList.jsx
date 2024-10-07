@@ -58,37 +58,47 @@ function TodoList() {
       <h1>To-do List Exercise</h1>
 
       {/* ADD TO-DO ITEM FORM */}
-      <p>Add description</p>
+      <p>Add description - Add due date</p>
+
       <input
+        type="text"
         name="desc"
         value={todoItem.desc}
         onChange={handleChange}
       />
-      <p>Add due date</p>
+    
       <input
+        type="date"
         name="date"
         value={todoItem.date}
         onChange={handleChange}
       />
+
       <p>Add priority</p>
-      <input
+      <select
         name="priority"
         value={todoItem.priority}
-        onChange={handleChange}
-      />
+        onChange={handleChange}>
 
-      <br/>
-      <br/>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+      </select>
+
+
+
+      <br />
+      <br />
       <button onClick={addTodo}>Add</button>
-      <br/>
+      <br />
       <button onClick={handleDelete}>Delete</button>
-      <br/>
+      <br />
 
 
       {/* TODO-LIST TABLE DISPLAY ELEMENT */}
       <h2>List of Goals:</h2>
 
-      <div className="ag-theme-material" style={{ width: 700, height: 500 }}>
+      <div className="ag-theme-material" style={{ width: 700, height: 800 }}>
         <AgGridReact
           rowData={todos}
           columnDefs={columnDefs}
