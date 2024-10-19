@@ -10,24 +10,63 @@ import TodoList from './TodoList'
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { AppBar, Toolbar, Typography } from '@mui/material';
+import { AppBar, Tab, Tabs, Toolbar, Typography } from '@mui/material';
+
+import { TabContext, TabPanel } from '@mui/lab';
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  const [value, setValue] = useState('1')
+
+  // CONST FUNC implemented with help by CHATGPT
+  const handleChange = (event, newValue) => {
+    //setDesc(event.target.value);
+    setValue(newValue)
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Container maxWidth="xl">
 
-        <AppBar position="static">
-          <Toolbar>
-            <Typography variant="h6">To-do List</Typography>
-          <CssBaseline />
-          </Toolbar>
-        </AppBar>
+        <CssBaseline />
+ 
 
-        
-        <TodoList />
+        {/*TABCONTEXT, TABS and TABPANEL implemented with help by MUI docs and CHATGPT */} 
+       <TabContext value={value}>
+          <Tabs 
+            value={value} onChange={handleChange}
+            centered>
+
+              <Tab label="SKIBIDI" value="0"></Tab>
+              <Tab label="SKIBIDI 2" value="1"></Tab>
+          </Tabs>
+
+
+          <TabPanel value="0">
+            <AppBar position="static">
+              <Toolbar>
+                <Typography variant="h6">Home Page</Typography>
+              </Toolbar>
+            </AppBar>
+
+            <p>Welcome to the app!</p>
+            </TabPanel>
+
+          <TabPanel value="1">
+              <AppBar position="static">
+                <Toolbar>
+                  <Typography variant="h6">ToDo List Page</Typography>
+                </Toolbar>
+              </AppBar>
+
+            <TodoList />
+          </TabPanel>
+
+            
+
+          </TabContext>
+
       </Container>
     </LocalizationProvider>
   )
