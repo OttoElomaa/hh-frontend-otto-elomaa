@@ -38,8 +38,8 @@ function App() {
             value={value} onChange={handleChange}
             centered>
 
-              <Tab label="SKIBIDI" value="0"></Tab>
-              <Tab label="SKIBIDI 2" value="1"></Tab>
+              <Tab label="HOME PAGE" value="0"></Tab>
+              <Tab label="TODO LIST" value="1"></Tab>
           </Tabs>
 
 
