@@ -8,16 +8,15 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import TodoList from './TodoList'
 
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+
 import { AppBar, Tab, Tabs, Toolbar, Typography } from '@mui/material';
 
 import { TabContext, TabPanel } from '@mui/lab';
 
 
 function App() {
-  
-  const [value, setValue] = useState('1')
+
+  const [value, setValue] = useState('0')
 
   // CONST FUNC implemented with help by CHATGPT
   const handleChange = (event, newValue) => {
@@ -26,49 +25,42 @@ function App() {
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Container maxWidth="xl">
 
-        <CssBaseline />
- 
+    <Container maxWidth="xl">
 
-        {/*TABCONTEXT, TABS and TABPANEL implemented with help by MUI docs and CHATGPT */} 
-       <TabContext value={value}>
-          <Tabs 
-            value={value} onChange={handleChange}
-            centered>
+      <CssBaseline />
 
-              <Tab label="HOME PAGE" value="0"></Tab>
-              <Tab label="TODO LIST" value="1"></Tab>
-          </Tabs>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6">My ToDo App</Typography>
+        </Toolbar>
+      </AppBar>
 
 
-          <TabPanel value="0">
-            <AppBar position="static">
-              <Toolbar>
-                <Typography variant="h6">Home Page</Typography>
-              </Toolbar>
-            </AppBar>
+      {/*TABCONTEXT, TABS and TABPANEL implemented with help by MUI docs and CHATGPT */}
+      <TabContext value={value}>
+        <Tabs
+          value={value} onChange={handleChange}
+          centered>
 
-            <p>Welcome to the app!</p>
-            </TabPanel>
+          <Tab label="HOME PAGE" value="0" />
+          <Tab label="TODO LIST" value="1" />
+        </Tabs>
 
-          <TabPanel value="1">
-              <AppBar position="static">
-                <Toolbar>
-                  <Typography variant="h6">ToDo List Page</Typography>
-                </Toolbar>
-              </AppBar>
 
-            <TodoList />
-          </TabPanel>
+        <TabPanel value="0">
 
-            
 
-          </TabContext>
+          <p>Welcome to the app!</p>
+        </TabPanel>
 
-      </Container>
-    </LocalizationProvider>
+        <TabPanel value="1">
+          <TodoList />
+        </TabPanel>
+
+      </TabContext>
+
+    </Container>
   )
 }
 
