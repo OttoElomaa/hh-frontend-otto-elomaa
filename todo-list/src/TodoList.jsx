@@ -13,13 +13,14 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 import 'dayjs/locale/de';
+import 'dayjs/locale/en-gb';
 
 
 function TodoList() {
 
   // STATES
   const [todos, setTodos] = useState([]);
-  const [todoItem, setTodoItem] = useState({ desc: "", date: dayjs(), priority: null })
+  const [todoItem, setTodoItem] = useState({ desc: "", date: dayjs(), priority: "Medium" })
 
   const [formatDate, setFormatDate] = useState(null);
 
@@ -81,7 +82,7 @@ function TodoList() {
       <h1>To-do List Exercise</h1>
 
       {/* ADD TO-DO ITEM FORM */}
-      <p>Add description - - - - - Add priority  - - - - - - - - -  Add due date</p>
+      <p>Description - Priority - Due date</p>
 
       <TextField
         type="text"
@@ -103,7 +104,7 @@ function TodoList() {
         <MenuItem value="High">High</MenuItem>
       </Select>
 
-      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='de'>
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='en-gb'>
         <DatePicker
           label="Date"
           value={todoItem.date}
