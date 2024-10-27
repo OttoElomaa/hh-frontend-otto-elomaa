@@ -6,15 +6,23 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css"; // Material Design theme
 import { Button, MenuItem, Select, TextField } from "@mui/material";
+
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+
+import 'dayjs/locale/de';
+import 'dayjs/locale/en-gb';
 
 
 function TodoList() {
 
   // STATES
   const [todos, setTodos] = useState([]);
-  const [todoItem, setTodoItem] = useState({ desc: "", date: dayjs(), priority: null })
+  const [todoItem, setTodoItem] = useState({ desc: "", date: dayjs(), priority: "Medium" })
+
+  const [formatDate, setFormatDate] = useState(null);
 
   const gridRef = useRef();
 
@@ -27,7 +35,9 @@ function TodoList() {
 
   // FUNCTIONS FOR ADDING AND REMOVAL (PASS REMOVE FUNC TO TODOTABLE.JSX)
   const addTodo = () => {
-    setTodos([...todos, todoItem]);
+    const formatted = dayjs(todoItem.date).format('DD.MM.YYYY')
+    setTodos([...todos, {...todoItem, date: formatted}]);
+   
   };
 
 
@@ -42,14 +52,7 @@ function TodoList() {
       alert('Select a row first!');
     }
   };
-
-  // Function to handle date change separately
-  // WRITTEN BY CHATGPT
-  const handleDateChange = (newDate) => {
-    setTodoItem((prevItem) => ({
-      ...prevItem, date: newDate, // Update only the date field
-    }));
-  };
+   
 
 
   // COLUMN DEFS CONST INFO
@@ -79,7 +82,7 @@ function TodoList() {
       <h1>To-do List Exercise</h1>
 
       {/* ADD TO-DO ITEM FORM */}
-      <p>Add description - - - - - Add priority  - - - - - - - - -  Add due date</p>
+      <p>Description - Priority - Due date</p>
 
       <TextField
         type="text"
@@ -92,7 +95,7 @@ function TodoList() {
       <Select
         type="text"
         label="Priority"
-        name="priority" 
+        name="priority"
         value={todoItem.priority}
         onChange={handleChange}>
 
@@ -101,11 +104,13 @@ function TodoList() {
         <MenuItem value="High">High</MenuItem>
       </Select>
 
-      <DatePicker
-        label="Date"
-        value={todoItem.date}
-        onChange={handleDateChange}
-      />
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='en-gb'>
+        <DatePicker
+          label="Date"
+          value={todoItem.date}
+          onChange={(newValue) => setTodoItem({ ...todoItem, date: newValue })}
+        />
+      </LocalizationProvider>
 
 
       <br />
@@ -114,7 +119,7 @@ function TodoList() {
         variant="outlined"
         onClick={addTodo}>Add</Button>
       <br />
-
+      
 
 
       {/* TODO-LIST TABLE DISPLAY ELEMENT */}
