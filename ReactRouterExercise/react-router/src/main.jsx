@@ -18,13 +18,17 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <Error />,
 
-    children: [                       // children are nested routes with a route
+    // children are nested routes with a route
+    // path can be defined relative to the parent path
+    children: [                       
       {
+        // INDEX: Front page, automatically in Outlet
+        // index route does not need any path
         element: <Home />,
-        index: true                   // index route does not need any path
+        index: true                   
       },
       {
-        path: "about",                // path can be defined relative to the parent path
+        path: "about",                
         element: <About />,
       },
       {
