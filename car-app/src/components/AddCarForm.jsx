@@ -9,14 +9,14 @@ import {
 	DialogTitle, DialogActions, DialogContent, DialogContentText
 } from "@mui/material";
 
-export default function AddCarForm() {
+export default function AddCarForm(props) {
 
 
-	const [cars, setCars] = useState([{
+	const [car, setCar] = useState({
 		brand: '', model: '',
 		color: '', fuel: '',
 		modelYear: '', price: ''
-	}])
+	})
 
 
 	const [open, setOpen] = useState(false);
@@ -45,10 +45,8 @@ export default function AddCarForm() {
 					component: 'form',
 					onSubmit: (event) => {
 						event.preventDefault();
-						const formData = new FormData(event.currentTarget);
-						const formJson = Object.fromEntries(formData.entries());
-						const email = formJson.email;
-						console.log(email);
+						props.func(car)
+						
 						handleClose();
 					},
 				}
@@ -59,19 +57,37 @@ export default function AddCarForm() {
 					<DialogContentText>
 						Add a new car to the database by entering its information.
 					</DialogContentText>
+
+
 					< TextField
 						required
 						id="brand"
 						name="brand"
 						label="Brand"
 						type="text"
+						value={car.brand}
 						fullWidth
 						variant="standard"
+						onChange={ event => setCar({...car, brand: event.target.value}) }
 					/>
+					< TextField
+						required
+						id="model"
+						name="model"
+						label="Model"
+						type="text"
+						value={car.model}
+						fullWidth
+						variant="standard"
+						onChange={ event => setCar({...car, model: event.target.value}) }
+					/>
+
+
 				</DialogContent>
 				< DialogActions >
+					< Button type="submit" > Add Car </Button>
 					<Button onClick={handleClose}> Cancel </Button>
-					< Button type="submit" > Subscribe </Button>
+					
 				</DialogActions>
 			</Dialog>
 

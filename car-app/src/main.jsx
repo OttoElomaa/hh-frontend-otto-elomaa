@@ -8,6 +8,6 @@ import AddCarForm from './components/AddCarForm.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <CarList/>
-    <AddCarForm/>
+    
   </StrictMode>,
 )
