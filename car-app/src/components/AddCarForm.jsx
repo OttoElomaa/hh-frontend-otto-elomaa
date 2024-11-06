@@ -34,7 +34,7 @@ export default function AddCarForm(props) {
 
 
 			<Button onClick={handleClickOpen} >
-				Open form dialog
+				Add Car Form
 			</Button>
 
 

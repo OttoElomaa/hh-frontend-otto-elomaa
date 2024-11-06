@@ -17,18 +17,26 @@ export default function CarList() {
 
 	//ag-grid taulukon sarakkeet 
 	const [colDefs, setColDefs] = useState([
-		{ field: 'brand' },
-		{ field: 'model' },
-		{ field: 'color' },
-		{ field: 'fuel' },
-		{ field: 'modelYear' },
-		{ field: 'price' },
+		{ field: 'brand', flex:1 },
+		{ field: 'model', flex:1 },
+		{ field: 'color', flex:1 },
+		{ field: 'fuel', flex:1 },
+		{ field: 'modelYear', flex:1 },
+		{ field: 'price', flex:1 },
 		{
 			cellRenderer: (params) =>
 				<Button
 					size="small"
 					color="error"
 					onClick={() => deleteCar(params)}
+				>Delete</Button>
+		},
+		{
+			cellRenderer: (params) =>
+				<Button
+					size="small"
+					color="error"
+					onClick={() => editCar(params)}
 				>Delete</Button>
 		}
 
@@ -65,6 +73,10 @@ export default function CarList() {
 		})
 		.then()
 		.catch()
+	}
+
+	const editCar = (car) => {
+		
 	}
 
 
