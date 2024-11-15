@@ -17,12 +17,12 @@ export default function CarList() {
 
 	//ag-grid taulukon sarakkeet 
 	const [colDefs, setColDefs] = useState([
-		{ field: 'brand', flex:1 },
-		{ field: 'model', flex:1 },
-		{ field: 'color', flex:1 },
-		{ field: 'fuel', flex:1 },
-		{ field: 'modelYear', flex:1 },
-		{ field: 'price', flex:1 },
+		{ field: 'brand', flex: 1 },
+		{ field: 'model', flex: 1 },
+		{ field: 'color', flex: 1 },
+		{ field: 'fuel', flex: 1 },
+		{ field: 'modelYear', flex: 1 },
+		{ field: 'price', flex: 1 },
 		{
 			cellRenderer: (params) =>
 				<Button
@@ -37,7 +37,7 @@ export default function CarList() {
 					size="small"
 					color="error"
 					onClick={() => editCar(params)}
-				>Delete</Button>
+				>Edit</Button>
 		}
 
 	]);
@@ -45,6 +45,7 @@ export default function CarList() {
 
 	const deleteCar = (params) => {
 		console.log("params ", params.data._links.car.href);
+
 		fetch(params.data._links.car.href,
 			{ method: 'DELETE' })
 			.then(response => {
@@ -61,22 +62,24 @@ export default function CarList() {
 				// Something went wrong
 			});
 	}
+
+
 	const addCarFunc = (car) => {
-		fetch(
-			'https://car-rest-service-carshop.2.rahtiapp.fi/cars',
-		{method:"POST",
-			headers:{
-				"Content-Type": "application/json",
-				"Accept": "application/json"
-			},
-			body: JSON.stringify(car)
-		})
-		.then()
-		.catch()
+		fetch('https://car-rest-service-carshop.2.rahtiapp.fi/cars',
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json"
+				},
+				body: JSON.stringify(car)
+			})
+			.then(getCars() )
+			.catch(err => console.error(err) )
 	}
 
 	const editCar = (car) => {
-		
+
 	}
 
 

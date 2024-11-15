@@ -29,6 +29,15 @@ export default function AddCarForm(props) {
 		setOpen(false);
 	};
 
+	const handleSaveCarButton = () => {
+		props.func(car)
+		handleClose()
+	}
+
+	const handleInputChange = (event) => {
+		setCar({ ...car, [event.target.name]: event.target.value })
+	}
+
 	return (
 		<div className="ag-theme-material" style={{ width: 900, height: 400 }}>
 
@@ -41,53 +50,39 @@ export default function AddCarForm(props) {
 			< Dialog
 				open={open}
 				onClose={handleClose}
-				PaperProps={{
-					component: 'form',
-					onSubmit: (event) => {
-						event.preventDefault();
-						props.func(car)
-						
-						handleClose();
-					},
-				}
-				}
 			>
-				<DialogTitle>Subscribe </DialogTitle>
+
+				<DialogTitle>Add car </DialogTitle>
 				< DialogContent >
+				
 					<DialogContentText>
 						Add a new car to the database by entering its information.
 					</DialogContentText>
 
-
+					{/* EVENT IS THE TEXTFIELD OBJECT */}
 					< TextField
 						required
-						id="brand"
 						name="brand"
 						label="Brand"
-						type="text"
 						value={car.brand}
 						fullWidth
-						variant="standard"
-						onChange={ event => setCar({...car, brand: event.target.value}) }
+						onChange={event => handleInputChange(event)}
 					/>
 					< TextField
 						required
-						id="model"
 						name="model"
 						label="Model"
-						type="text"
 						value={car.model}
 						fullWidth
-						variant="standard"
-						onChange={ event => setCar({...car, model: event.target.value}) }
+						onChange={event => handleInputChange(event)}
 					/>
 
 
 				</DialogContent>
 				< DialogActions >
-					< Button type="submit" > Add Car </Button>
+					< Button onClick={handleSaveCarButton} > Add Car </Button>
 					<Button onClick={handleClose}> Cancel </Button>
-					
+
 				</DialogActions>
 			</Dialog>
 

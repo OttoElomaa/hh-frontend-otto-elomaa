@@ -7,8 +7,8 @@ import AddCarForm from './components/AddCarForm.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <h1>Car App</h1>
-    <CarList/>
+    
+    <App/>
     
   </StrictMode>,
 )
