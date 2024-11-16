@@ -27,24 +27,35 @@ export default function TrainingList() {
 	const [colDefs, setColDefs] = useState([
 		{
 			headerName: 'Date/Time',
+			sortable: true, filter: true, floatingFilter: true,
 			cellRenderer: (params) =>
 				dayjs(params.data.date).format('DD.MM.YYYY HH:MM')
 			, flex: 1
 		},
-		{ field: 'duration', flex: 1 },
-		{ field: 'activity', flex: 1 },
+
+		{
+			field: 'duration', flex: 1,
+			sortable: true, filter: true, floatingFilter: true
+		},
+
+		{
+			field: 'activity', flex: 1, 
+			sortable: true, filter: true, floatingFilter: true
+		},
+
 		{
 			headerName: 'Customer',
 			cellRenderer: (params) =>
 				UserNameRenderer(params.data.customerlink)
-			, flex: 1
+			, flex: 1,
+			sortable: true, filter: true, floatingFilter: true,
 
 		},
 		{
 			headerName: '',
 			cellRenderer: (params) =>
 				<DeleteButton func={deleteTraining} params={params} />
-			, flex: 1
+			, flex: 1,
 		}
 
 	]);
@@ -72,12 +83,12 @@ export default function TrainingList() {
 				console.error(err)
 			});
 
-			return (userName);
+		return (<>{userName}</>);
 
 	}
 
 
-	
+
 
 	//hae autot backendistä 
 	//getCars funktio
