@@ -7,35 +7,77 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css"; // Material Design theme
 import { Button, Snackbar } from "@mui/material";
 import DeleteButton from "./DeleteButton";
+import dayjs from "dayjs";
 
 
 export default function TrainingList() {
 
 	//tilamuuttuja autoille
-	const [trainings, setTrainings] = useState([{ 
-		date: '', duration: '', activity: '', customerLink: ''}])
+	const [trainings, setTrainings] = useState([{
+		date: '', duration: '', activity: '', customerlink: ''
+	}])
 
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [msg, setMsg] = useState("");
 
+	useEffect(() => getTrainings(), [])
+
+
 	//ag-grid taulukon sarakkeet 
 	const [colDefs, setColDefs] = useState([
-		{ field: 'date', flex: 1 },
+		{
+			headerName: 'Date/Time',
+			cellRenderer: (params) =>
+				dayjs(params.data.date).format('DD.MM.YYYY HH:MM')
+			, flex: 1
+		},
 		{ field: 'duration', flex: 1 },
 		{ field: 'activity', flex: 1 },
-		{ field: 'customerLink', flex: 1 },
 		{
+			headerName: 'Customer',
+			cellRenderer: (params) =>
+				UserNameRenderer(params.data.customerlink)
+			, flex: 1
+
+		},
+		{
+			headerName: '',
 			cellRenderer: (params) =>
 				<DeleteButton func={deleteTraining} params={params} />
 			, flex: 1
 		}
-		
+
 	]);
 
 
 
-	useEffect(() => getTrainings(), [])
 
+
+
+
+	const UserNameRenderer = (link) => {
+
+		const [userName, setUserName] = useState('Loading...');
+
+		fetch(link,
+			{ method: 'GET' })
+			.then(response => {
+				return response.json()
+			})
+			.then(data => {
+				setUserName(data.firstname + " " + data.lastname)
+				console.log(userName)
+			})
+			.catch(err => {
+				console.error(err)
+			});
+
+			return (userName);
+
+	}
+
+
+	
 
 	//hae autot backendistä 
 	//getCars funktio
@@ -47,9 +89,23 @@ export default function TrainingList() {
 			})
 			.then(data => {
 				console.log("data ", data._embedded.trainings);
-				// Handle data
-				setTrainings(data._embedded.trainings);
+				const trainingData = data._embedded.trainings
 
+				// FROM CHATGPT
+				// Transform the data to extract links
+				const transformedData = trainingData.map(
+					(item) => (
+						{
+							date: item.date,
+							duration: item.duration,
+							activity: item.activity,
+							customerlink: item._links?.customer?.href || 'link missing'
+						}
+					)
+				);
+				// Save transformed data to state
+				setTrainings(transformedData);
+				// CHATGPT END
 			})
 			.catch(err => {
 				// Something went wrong
@@ -92,7 +148,7 @@ export default function TrainingList() {
 				>
 				</AgGridReact>
 
-				
+
 				<Snackbar
 					open={openSnackbar}
 					message={msg}
