@@ -54,7 +54,7 @@ export default function AddCarForm(props) {
 
 				<DialogTitle>Add car </DialogTitle>
 				< DialogContent >
-				
+
 					<DialogContentText>
 						Add a new car to the database by entering its information.
 					</DialogContentText>
@@ -62,17 +62,43 @@ export default function AddCarForm(props) {
 					{/* EVENT IS THE TEXTFIELD OBJECT */}
 					< TextField
 						required
-						name="brand"
-						label="Brand"
+						name="brand" label="Brand"
 						value={car.brand}
 						fullWidth
 						onChange={event => handleInputChange(event)}
 					/>
 					< TextField
 						required
-						name="model"
-						label="Model"
+						name="model" label="Model"
 						value={car.model}
+						fullWidth
+						onChange={event => handleInputChange(event)}
+					/>
+					< TextField
+						required
+						name="color" label="Color"
+						value={car.color}
+						fullWidth
+						onChange={event => handleInputChange(event)}
+					/>
+					< TextField
+						required
+						name="fuel" label="Fuel"
+						value={car.fuel}
+						fullWidth
+						onChange={event => handleInputChange(event)}
+					/>
+					< TextField
+						required
+						name="modelYear" label="Year"
+						value={car.modelYear}
+						fullWidth
+						onChange={event => handleInputChange(event)}
+					/>
+					< TextField
+						required
+						name="price" label="Price"
+						value={car.price}
 						fullWidth
 						onChange={event => handleInputChange(event)}
 					/>

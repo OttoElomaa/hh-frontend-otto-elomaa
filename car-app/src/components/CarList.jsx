@@ -3,10 +3,12 @@ import { useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 
 import AddCarForm from "./AddCarForm";
+import EditCarForm from "./EditCarForm";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css"; // Material Design theme
 import { Button, Snackbar } from "@mui/material";
+
 
 export default function CarList() {
 
@@ -30,14 +32,12 @@ export default function CarList() {
 					color="error"
 					onClick={() => deleteCar(params)}
 				>Delete</Button>
-		},
+				, flex: 1
+			},
 		{
 			cellRenderer: (params) =>
-				<Button
-					size="small"
-					color="error"
-					onClick={() => editCar(params)}
-				>Edit</Button>
+				<EditCarForm func={editCarFunc} params={params}/>
+			, flex: 1
 		}
 
 	]);
@@ -78,8 +78,18 @@ export default function CarList() {
 			.catch(err => console.error(err) )
 	}
 
-	const editCar = (car) => {
-
+	const editCarFunc = (car) => {
+		fetch(car._links.self.href,
+			{
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json"
+				},
+				body: JSON.stringify(car)
+			})
+			.then(getCars() )
+			.catch(err => console.error(err) )
 	}
 
 
