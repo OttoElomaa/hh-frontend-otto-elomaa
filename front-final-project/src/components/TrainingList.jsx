@@ -6,6 +6,7 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css"; // Material Design theme
 import { Button, Snackbar } from "@mui/material";
+import DeleteButton from "./DeleteButton";
 
 
 export default function TrainingList() {
@@ -23,6 +24,11 @@ export default function TrainingList() {
 		{ field: 'duration', flex: 1 },
 		{ field: 'activity', flex: 1 },
 		{ field: 'customerLink', flex: 1 },
+		{
+			cellRenderer: (params) =>
+				<DeleteButton func={deleteTraining} params={params} />
+			, flex: 1
+		}
 		
 	]);
 
@@ -49,6 +55,28 @@ export default function TrainingList() {
 				// Something went wrong
 			});
 	}
+
+
+	const deleteTraining = (params) => {
+		console.log("params ", params.data._links.self.href);
+
+		fetch(params.data._links.self.href,
+			{ method: 'DELETE' })
+			.then(response => {
+				if (response.ok) {
+					setOpenSnackbar(true);
+					setMsg("Delete succeed");
+					getTrainings();
+				}
+				else {
+					openSnackbar(false);
+				}
+			})
+			.catch(err => {
+				// Something went wrong
+			});
+	}
+
 
 
 	//näytä autot nettisivulla 

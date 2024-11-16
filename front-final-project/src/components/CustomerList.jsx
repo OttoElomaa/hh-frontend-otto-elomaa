@@ -6,16 +6,22 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css"; // Material Design theme
 import { Button, Snackbar } from "@mui/material";
+import DeleteButton from "./DeleteButton";
 
 
 export default function CustomerList() {
 
 	//tilamuuttuja autoille
-	const [customers, setCustomers] = useState([{ 
-		firstname: '', lastname: '', streetaddress: '', postcode: '', 
-		city: '', email: '', phone: ''  }])
+	const [customers, setCustomers] = useState([{
+		firstname: '', lastname: '', streetaddress: '', postcode: '',
+		city: '', email: '', phone: ''
+	}])
+
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [msg, setMsg] = useState("");
+
+	useEffect(() => getCustomers(), [])
+
 
 	//ag-grid taulukon sarakkeet 
 	const [colDefs, setColDefs] = useState([
@@ -23,11 +29,13 @@ export default function CustomerList() {
 		{ field: 'lastname', flex: 1 },
 		{ field: 'email', flex: 1 },
 		{ field: 'phone', flex: 1 },
-		
+		{
+			cellRenderer: (params) =>
+				<DeleteButton func={deleteCustomer} params={params} />
+			, flex: 1
+		}
+
 	]);
-
-
-	useEffect(() => getCustomers(), [])
 
 
 	//hae autot backendistä 
@@ -50,6 +58,27 @@ export default function CustomerList() {
 	}
 
 
+	const deleteCustomer = (params) => {
+		console.log("params ", params.data._links.self.href);
+
+		fetch(params.data._links.self.href,
+			{ method: 'DELETE' })
+			.then(response => {
+				if (response.ok) {
+					setOpenSnackbar(true);
+					setMsg("Delete succeed");
+					getCustomers();
+				}
+				else {
+					openSnackbar(false);
+				}
+			})
+			.catch(err => {
+				// Something went wrong
+			});
+	}
+
+
 	//näytä autot nettisivulla 
 	return (
 		<>
@@ -63,7 +92,7 @@ export default function CustomerList() {
 				>
 				</AgGridReact>
 
-				
+
 				<Snackbar
 					open={openSnackbar}
 					message={msg}
