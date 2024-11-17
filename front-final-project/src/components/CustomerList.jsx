@@ -7,11 +7,12 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css"; // Material Design theme
 import { Button, Snackbar } from "@mui/material";
 import DeleteButton from "./DeleteButton";
+import AddCustomerForm from "./AddCustomerForm";
 
 
 export default function CustomerList() {
 
-	//tilamuuttuja autoille
+	
 	const [customers, setCustomers] = useState([{
 		firstname: '', lastname: '', streetaddress: '', postcode: '',
 		city: '', email: '', phone: ''
@@ -57,6 +58,20 @@ export default function CustomerList() {
 			});
 	}
 
+	const addCustomerFunc = (customer) => {
+		fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/customers',
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json"
+				},
+				body: JSON.stringify(customer)
+			})
+			.then(getCustomers() )
+			.catch(err => console.error(err) )
+	}
+
 
 	const deleteCustomer = (params) => {
 		console.log("params ", params.data._links.self.href);
@@ -92,15 +107,15 @@ export default function CustomerList() {
 				>
 				</AgGridReact>
 
+				<AddCustomerForm func={addCustomerFunc}/>
 
 				<Snackbar
 					open={openSnackbar}
 					message={msg}
 					autoHideDuration={3000}
 					onClose={() => setOpenSnackbar(false)}
-				>
-
-				</Snackbar>
+				/>
+				
 			</div>
 		</>
 	)

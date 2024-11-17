@@ -8,11 +8,12 @@ import "ag-grid-community/styles/ag-theme-material.css"; // Material Design them
 import { Button, Snackbar } from "@mui/material";
 import DeleteButton from "./DeleteButton";
 import dayjs from "dayjs";
+import AddTrainingForm from "./AddTrainingForm";
 
 
 export default function TrainingList() {
 
-	//tilamuuttuja autoille
+
 	const [trainings, setTrainings] = useState([{
 		date: '', duration: '', activity: '', customerlink: ''
 	}])
@@ -39,7 +40,7 @@ export default function TrainingList() {
 		},
 
 		{
-			field: 'activity', flex: 1, 
+			field: 'activity', flex: 1,
 			sortable: true, filter: true, floatingFilter: true
 		},
 
@@ -124,6 +125,23 @@ export default function TrainingList() {
 	}
 
 
+	const addTrainingFunc = (train) => {
+		fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/trainings',
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json"
+				},
+				body: JSON.stringify(train)
+			})
+			.then(
+				getTrainings()
+			)
+			.catch(err => console.error(err))
+	}
+
+
 	const deleteTraining = (params) => {
 		console.log("params ", params.data._links.self.href);
 
@@ -159,15 +177,17 @@ export default function TrainingList() {
 				>
 				</AgGridReact>
 
+				<AddTrainingForm func={addTrainingFunc} />
+
 
 				<Snackbar
 					open={openSnackbar}
 					message={msg}
 					autoHideDuration={3000}
 					onClose={() => setOpenSnackbar(false)}
-				>
+				/>
 
-				</Snackbar>
+
 			</div>
 		</>
 	)
