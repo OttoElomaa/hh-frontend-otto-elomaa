@@ -15,7 +15,7 @@ export default function TrainingList() {
 
 
 	const [trainings, setTrainings] = useState([{
-		date: '', duration: '', activity: '', customerlink: ''
+		date: '', duration: '', activity: '', customer: ''
 	}])
 
 	const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -47,8 +47,8 @@ export default function TrainingList() {
 		{
 			headerName: 'Customer',
 			cellRenderer: (params) =>
-				UserNameRenderer(params.data.customerlink)
-			, flex: 1,
+				params.data.customer.firstname + ' ' + params.data.customer.lastname, 
+			flex: 1,
 			sortable: true, filter: true, floatingFilter: true,
 
 		},
@@ -66,61 +66,22 @@ export default function TrainingList() {
 
 
 
-
-	const UserNameRenderer = (link) => {
-
-		const [userName, setUserName] = useState('Loading...');
-
-		fetch(link,
-			{ method: 'GET' })
-			.then(response => {
-				return response.json()
-			})
-			.then(data => {
-				setUserName(data.firstname + " " + data.lastname)
-				console.log(userName)
-			})
-			.catch(err => {
-				console.error(err)
-			});
-
-		return (<>{userName}</>);
-
-	}
-
-
-
+	
 
 	//hae autot backendistä 
 	//getCars funktio
 	const getTrainings = () => {
-		fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/trainings',
+		fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/gettrainings',
 			{ method: 'GET' })
 			.then(response => {
 				return response.json()
 			})
 			.then(data => {
-				console.log("data ", data._embedded.trainings);
-				const trainingData = data._embedded.trainings
-
-				// FROM CHATGPT
-				// Transform the data to extract links
-				const transformedData = trainingData.map(
-					(item) => (
-						{
-							date: item.date,
-							duration: item.duration,
-							activity: item.activity,
-							customerlink: item._links?.customer?.href || 'link missing'
-						}
-					)
-				);
-				// Save transformed data to state
-				setTrainings(transformedData);
-				// CHATGPT END
+				console.log("trainings: ", data);
+				setTrainings(data);
 			})
 			.catch(err => {
-				// Something went wrong
+				console.error("Get Trainings Fail")
 			});
 	}
 
