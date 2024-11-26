@@ -3,7 +3,7 @@ import './App.css'
 
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
-import { AppBar, Stack, Tab, Tabs, Toolbar, Typography } from '@mui/material';
+import { AppBar, Button, Stack, Tab, Tabs, Toolbar, Typography } from '@mui/material';
 import { TabContext, TabPanel } from '@mui/lab';
 
 import CustomerList from './components/CustomerList';
@@ -19,6 +19,20 @@ function App() {
   const handleChange = (event, newValue) => {
     setValue(newValue)
   };
+
+
+  const resetDatabase = (params) => {
+		
+		fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/reset',
+			{ method: 'POST' })
+			.then(response => {
+					console.log('Reset success')
+			})
+			.catch(err => {
+				console.log('Couldnot reset daatabase')
+			});
+	}
+
 
 
   return (
@@ -60,6 +74,9 @@ function App() {
 
             <h2>Welcome to the personal trainer app!</h2>
             <p>We're here to help you improve. </p>
+
+            <Button onClick={() => resetDatabase()}>Reset Database</Button>
+
           </TabPanel>
 
           <TabPanel value="1">

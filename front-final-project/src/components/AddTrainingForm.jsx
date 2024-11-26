@@ -14,13 +14,15 @@ export default function AddTrainingForm(props) {
 
 
 	const [training, setTraining] = useState({
-		date: null, duration: '', activity: '', customerlink: ''
+		date: dayjs, duration: '', activity: '', customer: ''
 	})
 
 
 	const [open, setOpen] = useState(false);
 
 	const handleClickOpen = () => {
+		console.log(props.params.data)
+		console.log(props.params.data._links.self.href)
 		setOpen(true);
 	};
 
@@ -29,16 +31,28 @@ export default function AddTrainingForm(props) {
 	};
 
 	const handleSaveTrainingButton = () => {
+		// setTraining({ ...training, 
+		// 	customer: props.params.data._links.self.href
+		//  })
 		props.func(training)
+		console.log("final training object: ",training)
 		handleClose()
 	}
 
+	
+	// INPUT CHANGE WITH CUSTOMER LINK SAVED. According to ChatGPT
 	const handleInputChange = (event) => {
-		setTraining({ ...training, [event.target.name]: event.target.value })
-	}
+		const { name, value } = event.target;
+	  
+		setTraining((prevTraining) => ({
+		  ...prevTraining,
+		  [name]: value, 
+		  customer: props.params.data._links.self.href
+		}));
+	  };
 
 	return (
-		<div className="ag-theme-material" style={{ width: 900, height: 400 }}>
+		<div className="ag-theme-material" >
 
 
 			<Button onClick={handleClickOpen} >

@@ -96,9 +96,6 @@ export default function TrainingList() {
 				},
 				body: JSON.stringify(train)
 			})
-			.then(
-				getTrainings()
-			)
 			.catch(err => console.error(err))
 	}
 

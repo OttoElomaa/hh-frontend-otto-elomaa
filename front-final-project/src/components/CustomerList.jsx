@@ -8,6 +8,7 @@ import "ag-grid-community/styles/ag-theme-material.css"; // Material Design them
 import { Button, Snackbar } from "@mui/material";
 import DeleteButton from "./DeleteButton";
 import AddCustomerForm from "./AddCustomerForm";
+import AddTrainingForm from "./AddTrainingForm";
 
 
 export default function CustomerList() {
@@ -30,6 +31,12 @@ export default function CustomerList() {
 		{ field: 'lastname', flex: 1 },
 		{ field: 'email', flex: 1 },
 		{ field: 'phone', flex: 1 },
+		{
+			headerName: '',
+			cellRenderer: (params) =>
+				<AddTrainingForm func={addTrainingFunc} params={params} />
+			, flex: 1,
+		},
 		{
 			cellRenderer: (params) =>
 				<DeleteButton func={deleteCustomer} params={params} />
@@ -91,6 +98,20 @@ export default function CustomerList() {
 			.catch(err => {
 				// Something went wrong
 			});
+	}
+
+
+	const addTrainingFunc = (train) => {
+		fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/trainings',
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json"
+				},
+				body: JSON.stringify(train)
+			})
+			.catch(err => console.error(err))
 	}
 
 
