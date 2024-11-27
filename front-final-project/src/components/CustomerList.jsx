@@ -9,6 +9,7 @@ import { Button, Snackbar } from "@mui/material";
 import DeleteButton from "./DeleteButton";
 import AddCustomerForm from "./AddCustomerForm";
 import AddTrainingForm from "./AddTrainingForm";
+import EditCustomerForm from "./EditCustomerForm";
 
 
 export default function CustomerList() {
@@ -41,7 +42,14 @@ export default function CustomerList() {
 			cellRenderer: (params) =>
 				<DeleteButton func={deleteCustomer} params={params} />
 			, flex: 1
+		},
+		{
+			headerName: '',
+			cellRenderer: (params) =>
+				<EditCustomerForm func={saveEditedCustomer} params={params} />
+			, flex: 1,
 		}
+	
 
 	]);
 
@@ -69,6 +77,20 @@ export default function CustomerList() {
 		fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/customers',
 			{
 				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json"
+				},
+				body: JSON.stringify(customer)
+			})
+			.then(getCustomers() )
+			.catch(err => console.error(err) )
+	}
+
+	const saveEditedCustomer = (customer) => {
+		fetch(customer._links.self.href,
+			{
+				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
 					"Accept": "application/json"
