@@ -1,7 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { AgGridReact } from "ag-grid-react";
-
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css"; // Material Design theme
@@ -15,6 +14,8 @@ import EditCustomerForm from "./EditCustomerForm";
 export default function CustomerList() {
 
 	
+	const gridRef = useRef(null);
+
 	const [customers, setCustomers] = useState([{
 		firstname: '', lastname: '', streetaddress: '', postcode: '',
 		city: '', email: '', phone: ''
@@ -137,6 +138,12 @@ export default function CustomerList() {
 	}
 
 
+	const handleExportOnClick = () => {
+		gridRef.current.api.exportDataAsCsv();
+	}
+
+
+
 	//näytä autot nettisivulla 
 	return (
 		<>
@@ -144,6 +151,7 @@ export default function CustomerList() {
 				<AgGridReact
 					rowData={customers}
 					columnDefs={colDefs}
+					ref={gridRef}
 					pagination={true}
 					paginationPageSize={5}
 					paginationPageSizeSelector={false}
@@ -151,6 +159,7 @@ export default function CustomerList() {
 				</AgGridReact>
 
 				<AddCustomerForm func={addCustomerFunc}/>
+				<button onClick={handleExportOnClick}>Export customers as CSV</button>
 
 				<Snackbar
 					open={openSnackbar}

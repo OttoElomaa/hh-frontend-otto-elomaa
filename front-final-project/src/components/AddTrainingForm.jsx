@@ -42,11 +42,9 @@ export default function AddTrainingForm(props) {
 	
 	// INPUT CHANGE WITH CUSTOMER LINK SAVED. According to ChatGPT
 	const handleInputChange = (event) => {
-		const { name, value } = event.target;
-	  
-		setTraining((prevTraining) => ({
-		  ...prevTraining,
-		  [name]: value, 
+		setTraining((training) => ({
+		  ...training,
+		  [event.target.name]: event.target.value, 
 		  customer: props.params.data._links.self.href
 		}));
 	  };
