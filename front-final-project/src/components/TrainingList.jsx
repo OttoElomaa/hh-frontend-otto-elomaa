@@ -101,9 +101,9 @@ export default function TrainingList() {
 
 
 	const deleteTraining = (params) => {
-		console.log("params ", params.data._links.self.href);
+		console.log("params ", params.data);
 
-		fetch(params.data._links.self.href,
+		fetch("https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/trainings/" + params.data.id,
 			{ method: 'DELETE' })
 			.then(response => {
 				if (response.ok) {
