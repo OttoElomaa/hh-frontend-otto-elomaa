@@ -49,11 +49,11 @@ export default function AddCustomerForm(props) {
 				onClose={handleClose}
 			>
 
-				<DialogTitle>Add car </DialogTitle>
+				<DialogTitle>Add customer </DialogTitle>
 				< DialogContent >
 
 					<DialogContentText>
-						Add a new car to the database by entering its information.
+						Add a new customer by entering the personal information.
 					</DialogContentText>
 
 					{/* EVENT IS THE TEXTFIELD OBJECT */}

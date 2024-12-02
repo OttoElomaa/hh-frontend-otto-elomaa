@@ -157,9 +157,10 @@ export default function CustomerList() {
 					paginationPageSizeSelector={false}
 				>
 				</AgGridReact>
-
+				
+				<Button onClick={handleExportOnClick}>Export customers as CSV</Button>
 				<AddCustomerForm func={addCustomerFunc}/>
-				<button onClick={handleExportOnClick}>Export customers as CSV</button>
+				
 
 				<Snackbar
 					open={openSnackbar}

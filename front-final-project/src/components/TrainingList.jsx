@@ -135,16 +135,13 @@ export default function TrainingList() {
 				>
 				</AgGridReact>
 
-				<AddTrainingForm func={addTrainingFunc} />
-
-
+				
 				<Snackbar
 					open={openSnackbar}
 					message={msg}
 					autoHideDuration={3000}
 					onClose={() => setOpenSnackbar(false)}
 				/>
-
 
 			</div>
 		</>

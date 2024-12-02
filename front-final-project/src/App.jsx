@@ -8,6 +8,7 @@ import { TabContext, TabPanel } from '@mui/lab';
 
 import CustomerList from './components/CustomerList';
 import TrainingList from './components/TrainingList';
+import TrainingCalendar from './components/TrainingCalendar';
 
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
             <Tab label="HOME PAGE" value="0" />
             <Tab label="CUSTOMERS" value="1" />
             <Tab label="SESSIONS" value="2" />
+            <Tab label="TRAINING CALENDAR" value="3" />
           </Tabs>
 
 
@@ -85,6 +87,10 @@ function App() {
 
           <TabPanel value="2">
             <TrainingList/>
+          </TabPanel>
+
+          <TabPanel value="3">
+            <TrainingCalendar/>
           </TabPanel>
 
         </TabContext>

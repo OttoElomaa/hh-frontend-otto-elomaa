@@ -50,7 +50,7 @@ export default function AddTrainingForm(props) {
 	  };
 
 	return (
-		<div className="ag-theme-material" >
+		<div>
 
 
 			<Button onClick={handleClickOpen} >
