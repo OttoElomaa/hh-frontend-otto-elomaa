@@ -130,7 +130,7 @@ export default function TrainingList() {
 					rowData={trainings}
 					columnDefs={colDefs}
 					pagination={true}
-					paginationPageSize={5}
+					paginationPageSize={10}
 					paginationPageSizeSelector={false}
 				>
 				</AgGridReact>

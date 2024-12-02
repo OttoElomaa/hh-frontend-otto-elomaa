@@ -12,27 +12,27 @@ import TrainingCalendar from './components/TrainingCalendar';
 
 
 function App() {
-  
+
 
   const [value, setValue] = useState('0')
 
-  
+
   const handleChange = (event, newValue) => {
     setValue(newValue)
   };
 
 
   const resetDatabase = (params) => {
-		
-		fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/reset',
-			{ method: 'POST' })
-			.then(response => {
-					console.log('Reset success')
-			})
-			.catch(err => {
-				console.log('Couldnot reset daatabase')
-			});
-	}
+
+    fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/reset',
+      { method: 'POST' })
+      .then(response => {
+        console.log('Reset success')
+      })
+      .catch(err => {
+        console.log('Couldnot reset daatabase')
+      });
+  }
 
 
 
@@ -49,28 +49,32 @@ function App() {
         justifyContent="center"
         alignItems="center"
       >
-        <AppBar position="fixed"> 
-          <Toolbar>
-            <Typography variant="h6">Personal Training App</Typography>
-          </Toolbar>
-        </AppBar>
 
-       
+
+
 
         {/*TABCONTEXT, TABS and TABPANEL implemented with help by MUI docs and CHATGPT */}
         <TabContext value={value}>
-          <Tabs
-            value={value} onChange={handleChange}
-            centered
-          
-            >
 
-            <Tab label="HOME PAGE" value="0" />
-            <Tab label="CUSTOMERS" value="1" />
-            <Tab label="SESSIONS" value="2" />
-            <Tab label="TRAINING CALENDAR" value="3" />
-          </Tabs>
+          <AppBar position="fixed">
+            <Toolbar>
+              <Typography variant="h6">Personal Training App</Typography>
 
+
+
+              <Tabs
+                value={value} onChange={handleChange}
+                centered
+
+              >
+
+                <Tab label="HOME PAGE" value="0" />
+                <Tab label="CUSTOMERS" value="1" />
+                <Tab label="SESSIONS" value="2" />
+                <Tab label="TRAINING CALENDAR" value="3" />
+              </Tabs>
+            </Toolbar>
+          </AppBar>
 
           <TabPanel value="0">
 
@@ -82,15 +86,15 @@ function App() {
           </TabPanel>
 
           <TabPanel value="1">
-            <CustomerList/>
+            <CustomerList />
           </TabPanel>
 
           <TabPanel value="2">
-            <TrainingList/>
+            <TrainingList />
           </TabPanel>
 
           <TabPanel value="3">
-            <TrainingCalendar/>
+            <TrainingCalendar />
           </TabPanel>
 
         </TabContext>

@@ -139,25 +139,30 @@ export default function CustomerList() {
 
 
 	const handleExportOnClick = () => {
-		gridRef.current.api.exportDataAsCsv();
+		gridRef.current.api.exportDataAsCsv(
+			{
+				fileName: "customers.csv",
+				columnKeys: ["firstname", "lastname", "streetaddress", "postcode",
+		"city","email", "phone"]
+			}
+		);
 	}
 
-
-
+	
 	//näytä autot nettisivulla 
 	return (
 		<>
-			<div className="ag-theme-material" style={{ width: 900, height: 400 }}>
+			<div className="ag-theme-material" style={{ width: 900, height: 500 }}>
 				<AgGridReact
 					rowData={customers}
 					columnDefs={colDefs}
 					ref={gridRef}
 					pagination={true}
-					paginationPageSize={5}
+					paginationPageSize={10}
 					paginationPageSizeSelector={false}
 				>
 				</AgGridReact>
-				
+
 				<Button onClick={handleExportOnClick}>Export customers as CSV</Button>
 				<AddCustomerForm func={addCustomerFunc}/>
 				
