@@ -62,16 +62,20 @@ function App() {
 
 
 
-              <Tabs
+              <Tabs 
                 value={value} onChange={handleChange}
                 centered
 
               >
 
-                <Tab label="HOME PAGE" value="0" />
-                <Tab label="CUSTOMERS" value="1" />
-                <Tab label="SESSIONS" value="2" />
-                <Tab label="TRAINING CALENDAR" value="3" />
+                <Tab label="HOME PAGE" value="0" sx={{ color: 'white',  '&.Mui-selected': {
+      color: 'white'} }} />
+                <Tab label="CUSTOMERS" value="1" sx={{ color: 'white',  '&.Mui-selected': {
+      color: 'white'} }} />
+                <Tab label="SESSIONS" value="2" sx={{ color: 'white',  '&.Mui-selected': {
+      color: 'white'} }} />
+                <Tab label="TRAINING CALENDAR" value="3" sx={{ color: 'white',  '&.Mui-selected': {
+      color: 'white'} }} />
               </Tabs>
             </Toolbar>
           </AppBar>

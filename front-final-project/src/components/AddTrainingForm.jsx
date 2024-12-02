@@ -6,9 +6,7 @@ import {
 	Button, Snackbar, Dialog, TextField,
 	DialogTitle, DialogActions, DialogContent, DialogContentText
 } from "@mui/material";
-import { DateTimePicker } from "@mui/lab";
 import dayjs from "dayjs";
-import { DatePicker } from "rsuite";
 
 export default function AddTrainingForm(props) {
 
